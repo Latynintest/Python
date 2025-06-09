@@ -1,12 +1,17 @@
+# Создать переменную
 my_heigh = 172
 print(my_heigh)
 
+# Перезаписать переменную
 my_name = 'Sergey'
 my_name = 'Sergey Latynin'
 print(my_name)
 
+# Получить пользовательский ввод
 pet_name = input("What is your pet's name? ")
 print('Your pet ' + pet_name)
+
+# Создать функцию
 
 
 def print_python():
@@ -14,6 +19,8 @@ def print_python():
 
 
 print_python()
+
+# Параметризация функции
 
 
 def print_letter(let):
