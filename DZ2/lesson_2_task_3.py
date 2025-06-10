@@ -1,3 +1,4 @@
+# Площадь квадрата со стороной a
 from math import ceil
 
 
