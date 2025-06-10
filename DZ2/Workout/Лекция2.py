@@ -75,7 +75,9 @@ def min_number():
 result = min_number()
 print(f"Наименьшее число: {result}")
 
-
+# Сложение всех элементов списка
 current_list = [5, 15, 20, 30, 50, 55, 75, 60, 70]
-summa = reduce((lambda x, y: x + y), current_list)
+summa = reduce(lambda x, y: x + y, current_list)
 print(summa)
+# Более простой вариант сложения
+print(sum(current_list))  # Самый простой и питонический способ
