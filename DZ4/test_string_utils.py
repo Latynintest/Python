@@ -43,7 +43,7 @@ def test_trim(utils, input_str, expected):
 
 @pytest.mark.negative
 def test_trim_negative(utils):
-    with pytest.raises(AttributeError):
+    with pytest.raises(TypeError):
         utils.trim(123)
 
 
