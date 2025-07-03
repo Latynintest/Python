@@ -120,3 +120,51 @@ def test_avg_list(nums, result):
     calculator = Calculator()
     res = calculator.avg(nums)
     assert res == result
+
+
+@pytest.fixture
+def calculator():
+    return Calculator()
+
+
+@pytest.mark.positive_test
+def test_div_positive(calculator):
+    res = calculator.div(10, 2)
+    assert res == 5
+
+
+def test_div_by_zero(calculator):
+    with pytest.raises(ArithmeticError):
+        calculator.div(10, 0)
+
+
+def test_avg_empty_list(calculator):
+    numbers = []
+    res = calculator.avg(numbers)
+    assert res == 0
+
+
+@pytest.mark.positive_test
+def test_avg_positive(calculator):
+    numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 5]
+    res = calculator.avg(numbers)
+    assert res == 5
+
+
+@pytest.mark.parametrize('num1, num2, result', [
+    (4, 5, 9),
+    (-6, -10, -16),
+    (-6, 6, 0),
+    (5.61, 4.29, 9.9),
+    (10, 0, 10)])
+def test_sum_nums(calculator, num1, num2, result):
+    res = calculator.sum(num1, num2)
+    assert res == result
+
+
+@pytest.mark.parametrize('nums, result', [
+    ([], 0),
+    ([1, 2, 3, 4, 5, 6, 7, 8, 9, 5], 5)])
+def test_avg_list(calculator, nums, result):
+    res = calculator.avg(nums)
+    assert res == result

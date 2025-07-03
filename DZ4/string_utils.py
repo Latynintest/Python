@@ -22,11 +22,8 @@ class StringUtils:
         Принимает на вход текст и удаляет пробелы в начале, если они есть
         Пример: `trim("   skypro") -> "skypro"`
         """
-        whitespace = " "
-        while string.startswith(whitespace):
-            string = string.removeprefix(whitespace)
         self._check_string_type(string)
-        return string
+        return string.lstrip()
 
     def contains(self, string: str, symbol: str) -> bool:
         """
