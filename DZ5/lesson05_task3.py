@@ -6,8 +6,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.firefox.service import Service as FirefoxService
 
 
-options = webdriver.ChromeOptions()
-options.add_argument("--start-maximized")
+options = webdriver.FirefoxOptions()
+options.add_argument("--width=1920")  # Установка ширины окна
+options.add_argument("--height=1080")  # Установка высоты окна
 
 # Инициализация драйвера
 

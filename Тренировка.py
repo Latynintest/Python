@@ -12,14 +12,32 @@ from selenium.common.exceptions import (TimeoutException,
                                         StaleElementReferenceException,
                                         ElementClickInterceptedException)
 
+# Инициализация опций (первая строка сохранена)
 options = webdriver.ChromeOptions()
 
-
 # Настройки для подавления логов
-options.add_experimental_option("excludeSwitches", ["enable-logging"])
-options.add_argument("--disable-logging")
+options.add_experimental_option(
+    "excludeSwitches", ["enable-logging", "enable-automation"])
+options.add_argument("--log-level=3")  # FATAL уровень логов
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--disable-gpu")
+options.add_argument("--no-sandbox")
 options.add_argument("--disable-cloud-services")
+options.add_argument("--disable-extensions")
+options.add_argument("--disable-logging")
 options.add_argument("--disable-gcm")
+options.add_argument("--silent")
+
+# Настройка сервиса с перенаправлением логов
+service = ChromeService(
+    ChromeDriverManager().install(),
+    service_args=["--verbose"],
+    log_path="NUL"  # Для Linux/MacOS используйте "/dev/null"
+)
+
+# Создание драйвера с единым объектом options
+driver = webdriver.Chrome(service=service, options=options)
+
 
 # Настройки приватности и анти-детекта
 options.add_argument("--disable-webgl")
@@ -36,7 +54,12 @@ driver = webdriver.Chrome(
 driver.execute_script(
     "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
-driver.maximize_window()
+# Настройки разворота экрана
+options.add_argument("--start-fullscreen")  # Полноэкранный режим
+options.add_argument("--window-size=1920,1080")  # Явный размер окна
+options.add_argument("--start-maximized")  # Основной вариант
+options.add_argument("--start-maximised")  # Запасной вариант для некоторых систем
+driver.maximize_window()  # Явная команда после инициализации
 
 
 # Задача 1
