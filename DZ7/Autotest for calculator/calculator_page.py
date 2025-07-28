@@ -37,6 +37,6 @@ class CalculatorPage:
                 (By.CSS_SELECTOR, ".screen"), expected_result)
         )
 
-# Возвращает текущий результат с экрана калькулятора.
+# Возвращает текущий результат с экрана калькулятора
     def get_result(self) -> str:
         return self.driver.find_element(By.CSS_SELECTOR, ".screen").text

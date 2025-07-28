@@ -11,7 +11,7 @@ class GoogleMainPage:
         # Селектор поля поиска
         self.search_box = (By.NAME, 'q')
         # Селектор результатов
-        self.results_selector = (By.CSS_SELECTOR, 'div.g')
+        self.results_selector = (By.CSS_SELECTOR, 'div#search .tF2Cxc')
 
     def human_like_typing(self, element, text):
         # Имитация человеческого ввода
