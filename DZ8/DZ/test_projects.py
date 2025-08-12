@@ -2,6 +2,7 @@ import pytest
 import requests
 from faker import Faker
 from client import YouGileClient
+import time
 
 
 fake = Faker()
@@ -10,6 +11,7 @@ fake = Faker()
 # Подготовка клиента для тестов
 @pytest.fixture(scope="session")
 def api_client():
+    time.sleep(2)
     # Инициализация клиента
     client = YouGileClient()
 
@@ -17,16 +19,17 @@ def api_client():
     companies_data = client.get_companies()
     client._company_id = companies_data["content"][0]["id"]
 
-    # Получаем API-ключ
-    api_key = client.get_api_key(client._company_id)
-    client.set_api_key(api_key)
+    # Получаем API-ключ один раз для всех тестов
+    client._api_key = client.get_api_key(client._company_id)
+    client.session.headers.update(
+        {"Authorization": f"Bearer {client._api_key}"})
 
     # Возврат клиента тестам
     yield client
 
     # Удаляем API ключ после всех тестов
-    if api_key:
-        client.delete_api_key(api_key)
+    if hasattr(client, '_api_key') and client._api_key:
+        client.delete_api_key(client._api_key)
 
 
 # Cоздание временного проекта
@@ -51,11 +54,13 @@ def test_get_companies(api_client):
 
 # Создание ключа
 def test_get_api_key(api_client):
-    api_key = api_client.get_api_key(api_client._company_id)
+    """Проверяем, что ключ был получен в фикстуре"""
+    # Проверяем что у объекта api_client существует атрибут с именем _api_key
+    assert hasattr(api_client, '_api_key')
     # Проверяем что API-ключ является строкой
-    assert isinstance(api_key, str)
+    assert isinstance(api_client._api_key, str)
     # Проверяем что длина строки с ключом больше 0
-    assert len(api_key) > 0
+    assert len(api_client._api_key) > 0
 
 
 # Cоздать новый проект
